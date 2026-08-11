@@ -11,6 +11,7 @@
   /* --- Color de marca (del brief, no negociable) --- */
   --terracota:       #B4694A;
   --terracota-dark:  #93502F;
+  --terracota-deep:  #7C4225; /* fondos sólidos con texto crema — cumple WCAG AA 4.5:1 */
   --terracota-light: #E3B49F;
   --terracota-wash:  #F5E4DA;
 
@@ -25,7 +26,7 @@
 
   --carbon:      #2E2A26;
   --carbon-soft: #5B554D;
-  --carbon-faint:#8A8377;
+  --carbon-faint:#A89F90; /* ajustado para 4.5:1 sobre --carbon (WCAG AA) */
 
   --oro:       #C9A227;  /* EXCLUSIVO: badge premio 2024/2025 */
   --oro-light: #F1E1A6;
@@ -142,7 +143,7 @@ input, textarea, select { font: inherit; color: inherit; }
 .section--alt { background: var(--crema-dark); }
 .section--carbon { background: var(--carbon); color: var(--crema); }
 .section--carbon h1, .section--carbon h2, .section--carbon h3 { color: var(--crema); }
-.section--terracota { background: var(--terracota); color: var(--crema); }
+.section--terracota { background: var(--terracota-dark); color: var(--crema); }
 .section--terracota h1, .section--terracota h2, .section--terracota h3 { color: var(--crema); }
 
 .section-head { max-width: 640px; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
@@ -173,10 +174,10 @@ input, textarea, select { font: inherit; color: inherit; }
   white-space: nowrap;
 }
 .btn-primary {
-  background: var(--terracota); color: var(--crema);
+  background: var(--terracota-dark); color: var(--crema);
   box-shadow: var(--shadow-lift);
 }
-.btn-primary:hover { background: var(--terracota-dark); transform: translateY(-2px); }
+.btn-primary:hover { background: var(--terracota-deep); transform: translateY(-2px); }
 .btn-secondary {
   background: transparent; color: var(--carbon);
   border: 1.5px solid var(--carbon);
@@ -338,6 +339,35 @@ input, textarea, select { font: inherit; color: inherit; }
 /* --- Sprig ilustración botánica inline (usada suelta) --- */
 .sprig { color: var(--salvia); }
 
+/* --- Marquee (franja de scroll continuo) --- */
+.marquee {
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+}
+.marquee__track {
+  display: flex; gap: 1rem; width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+}
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track { animation-play-state: paused; }
+.marquee__item {
+  flex: 0 0 auto; width: 190px; height: 250px;
+  border-radius: var(--radius-m); overflow: hidden; box-shadow: var(--shadow-card);
+}
+.marquee__item img { width: 100%; height: 100%; object-fit: cover; }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (min-width: 720px) {
+  .marquee__item { width: 240px; height: 310px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation-play-state: paused; }
+}
+
 /* --- Galería --- */
 .gallery-grid {
   display: grid; gap: clamp(.6rem, 1.6vw, 1.1rem);
@@ -467,7 +497,14 @@ input, textarea, select { font: inherit; color: inherit; }
   .hero { min-height: calc(100svh - 112px); }
 }
 .hero__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-.hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.hero__bg img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: center 35%;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-soft);
+}
+.hero__bg img:first-child { opacity: 1; } /* always-visible fallback if JS never runs */
+.hero__bg img.is-active { opacity: 1; z-index: 1; }
 .hero__bg::after {
   content: "";
   position: absolute; inset: 0;

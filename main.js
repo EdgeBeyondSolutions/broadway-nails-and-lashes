@@ -78,6 +78,44 @@
     }, 6000);
   }
 
+  /* ---- Hero: carrusel de fondo con crossfade ---- */
+  function initHeroCarousel() {
+    var stage = $("[data-hero-carousel]");
+    if (!stage) return;
+    var slides = $$("img", stage);
+    if (slides.length < 2) return;
+
+    // Loop < 4s cuenta como "intrusivo" — respeta prefers-reduced-motion (queda fija la 1a foto)
+    if (reduced) return;
+
+    var current = 0;
+    var timer = null;
+
+    function goTo(next) {
+      slides[current].classList.remove("is-active");
+      slides[next].classList.add("is-active");
+      current = next;
+    }
+
+    function tick() {
+      goTo((current + 1) % slides.length);
+    }
+
+    function start() {
+      if (timer) return;
+      timer = setInterval(tick, 2800);
+    }
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    start();
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop(); else start();
+    });
+  }
+
   /* ---- Header: sombra/estado al hacer scroll ---- */
   function initHeaderState() {
     var header = $(".site-header");
@@ -109,6 +147,7 @@
     safe(initNav, "initNav");
     safe(initSmoothAnchors, "initSmoothAnchors");
     safe(initReveals, "initReveals");
+    safe(initHeroCarousel, "initHeroCarousel");
     safe(initHeaderState, "initHeaderState");
     safe(initContactForm, "initContactForm");
     document.documentElement.classList.add("is-ready");

@@ -103,7 +103,7 @@
 
     function start() {
       if (timer) return;
-      timer = setInterval(tick, 2800);
+      timer = setInterval(tick, 3000);
     }
     function stop() {
       clearInterval(timer);

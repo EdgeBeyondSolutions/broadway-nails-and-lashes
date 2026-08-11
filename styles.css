@@ -280,6 +280,18 @@ input, textarea, select { font: inherit; color: inherit; }
 .badge-award--lg .badge-award-text strong { font-size: 1.2rem; }
 .badge-award--lg .badge-award-text span { font-size: .84rem; }
 
+/* --- Insignias reales (BNS Best in Business) --- */
+.badge-icon--photo { background: none; }
+.badge-icon--photo img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+.award-badges { display: flex; align-items: center; justify-content: center; gap: 1.4rem; flex-wrap: wrap; }
+.award-badges img { width: 92px; height: 92px; filter: drop-shadow(0 12px 22px rgba(46,42,38,.28)); }
+@media (min-width: 720px) { .award-badges img { width: 128px; height: 128px; } }
+
+.award-proof { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+.award-proof__plaque { width: 150px; border-radius: var(--radius-s); box-shadow: var(--shadow-card); }
+@media (min-width: 720px) { .award-proof__plaque { width: 190px; } }
+
 /* --- Tarjeta genérica --- */
 .card {
   background: var(--white);

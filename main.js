@@ -78,6 +78,53 @@
     }, 6000);
   }
 
+  /* ---- Hero: revelación cinética del titular ---- */
+  function initHeroTitleReveal() {
+    var h1 = $(".hero h1");
+    if (!h1 || h1.dataset.split) return;
+    h1.dataset.split = "1";
+    var text = h1.textContent.trim();
+    h1.setAttribute("aria-label", text);
+    h1.innerHTML = text.split(/(\s+)/).map(function (chunk) {
+      if (/^\s+$/.test(chunk)) return chunk;
+      return '<span class="hero-word" aria-hidden="true">' + chunk + "</span>";
+    }).join("");
+    // pequeño delay para asegurar el paint inicial antes de animar
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        $$(".hero-word", h1).forEach(function (w, i) {
+          w.style.transitionDelay = (i * 70) + "ms";
+        });
+        h1.classList.add("is-revealed");
+      });
+    });
+    // Safety net: si algo falla, el titular nunca debe quedar invisible
+    setTimeout(function () { h1.classList.add("is-revealed"); }, 2000);
+  }
+
+  /* ---- Hero: parallax sutil con el mouse ---- */
+  function initHeroParallax() {
+    if (reduced) return;
+    if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    var hero = $(".hero");
+    var bg = hero && $(".hero__bg", hero);
+    if (!hero || !bg) return;
+    var raf = null;
+    hero.addEventListener("mousemove", function (e) {
+      var rect = hero.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        bg.style.transform = "translate3d(" + (x * -16).toFixed(1) + "px," + (y * -12).toFixed(1) + "px,0)";
+        raf = null;
+      });
+    });
+    hero.addEventListener("mouseleave", function () {
+      bg.style.transform = "";
+    });
+  }
+
   /* ---- Hero: carrusel de fondo con crossfade ---- */
   function initHeroCarousel() {
     var stage = $("[data-hero-carousel]");
@@ -116,6 +163,31 @@
     });
   }
 
+  /* ---- Galería: filtro por categoría ---- */
+  function initGalleryFilter() {
+    var menu = $(".gallery-filter-menu");
+    var grid = $("[data-gallery-grid]");
+    if (!menu || !grid) return;
+    var buttons = $$(".gallery-filter", menu);
+    var items = $$("[data-cat]", grid);
+    if (!buttons.length) return;
+
+    function select(filter) {
+      buttons.forEach(function (b) {
+        b.setAttribute("aria-selected", b.getAttribute("data-filter") === filter ? "true" : "false");
+      });
+      items.forEach(function (el) {
+        el.hidden = el.getAttribute("data-cat") !== filter;
+      });
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { select(b.getAttribute("data-filter")); });
+    });
+
+    select(buttons[0].getAttribute("data-filter"));
+  }
+
   /* ---- Header: sombra/estado al hacer scroll ---- */
   function initHeaderState() {
     var header = $(".site-header");
@@ -127,19 +199,46 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  /* ---- Formulario de contacto (visual — sin backend en esta fase) ---- */
+  /* ---- Formulario de contacto (Formspree via fetch, con fallback si el ID no está listo) ---- */
   function initContactForm() {
     var form = $("[data-contact-form]");
     if (!form) return;
     var status = $(".form-status", form);
+    var submitBtn = $('button[type="submit"]', form);
+
+    function showStatus(text, ok) {
+      if (!status) return;
+      status.textContent = text;
+      status.className = "form-status " + (ok ? "form-status--ok" : "form-status--err") + " is-visible";
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!form.reportValidity()) return;
-      if (status) {
-        status.textContent = "Thank you — this form is a design preview. In the build phase, it'll be connected to land straight in your inbox.";
-        status.className = "form-status form-status--ok is-visible";
+
+      var action = form.getAttribute("action") || "";
+      if (!action || action.indexOf("REPLACE_WITH_FORM_ID") !== -1) {
+        showStatus("This form isn't connected yet — call us at (210) 314-2896 and we'll help right away.", false);
+        return;
       }
-      form.reset();
+
+      if (submitBtn) submitBtn.disabled = true;
+      fetch(action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      }).then(function (response) {
+        if (response.ok) {
+          showStatus("Thanks — your message is on its way. We'll get back to you soon.", true);
+          form.reset();
+        } else {
+          showStatus("Something went wrong sending your message. Please call us at (210) 314-2896 instead.", false);
+        }
+      }).catch(function () {
+        showStatus("Something went wrong sending your message. Please call us at (210) 314-2896 instead.", false);
+      }).finally(function () {
+        if (submitBtn) submitBtn.disabled = false;
+      });
     });
   }
 
@@ -148,6 +247,9 @@
     safe(initSmoothAnchors, "initSmoothAnchors");
     safe(initReveals, "initReveals");
     safe(initHeroCarousel, "initHeroCarousel");
+    safe(initHeroTitleReveal, "initHeroTitleReveal");
+    safe(initHeroParallax, "initHeroParallax");
+    safe(initGalleryFilter, "initGalleryFilter");
     safe(initHeaderState, "initHeaderState");
     safe(initContactForm, "initContactForm");
     document.documentElement.classList.add("is-ready");

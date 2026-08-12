@@ -199,10 +199,12 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  /* ---- Formulario de contacto (Formspree via fetch, con fallback si el ID no está listo) ---- */
+  /* ---- Formulario de contacto: envío real por Formspree, tarjeta de éxito, luego el formulario reaparece vacío ---- */
   function initContactForm() {
     var form = $("[data-contact-form]");
     if (!form) return;
+    var wrap = form.closest(".contact-form-wrap");
+    var successEl = wrap ? $(".form-success", wrap) : null;
     var status = $(".form-status", form);
     var submitBtn = $('button[type="submit"]', form);
 
@@ -229,8 +231,18 @@
         headers: { "Accept": "application/json" }
       }).then(function (response) {
         if (response.ok) {
-          showStatus("Thanks — your message is on its way. We'll get back to you soon.", true);
+          if (status) status.className = "form-status";
           form.reset();
+          if (successEl) {
+            form.style.display = "none";
+            successEl.hidden = false;
+            setTimeout(function () {
+              successEl.hidden = true;
+              form.style.display = "";
+            }, 4500);
+          } else {
+            showStatus("Thanks — your message is on its way. We'll get back to you soon.", true);
+          }
         } else {
           showStatus("Something went wrong sending your message. Please call us at (210) 314-2896 instead.", false);
         }

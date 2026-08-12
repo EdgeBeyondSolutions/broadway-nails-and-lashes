@@ -481,6 +481,22 @@ input, textarea, select { font: inherit; color: inherit; }
 .form-status--ok { background: var(--salvia-wash); color: var(--salvia-dark); }
 .form-status--err { background: var(--terracota-wash); color: var(--terracota-dark); }
 
+/* --- Formulario: tarjeta de éxito superpuesta --- */
+.contact-form-wrap { position: relative; }
+.form-success {
+  text-align: center; padding: clamp(3rem, 8vw, 5rem) 1.5rem;
+  background: var(--white); border-radius: var(--radius-m); box-shadow: var(--shadow-card);
+}
+.form-success__icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--salvia-wash); color: var(--salvia-dark);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.3rem;
+}
+.form-success__icon svg { width: 28px; height: 28px; }
+.form-success h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom: .5rem; }
+.form-success p { color: var(--text-soft); }
+
 /* --- Info tarjetas (horario / dirección / tel) --- */
 .info-card {
   display: flex; gap: 1rem; align-items: flex-start;

@@ -440,6 +440,7 @@ input, textarea, select { font: inherit; color: inherit; }
 .gallery-filter__thumb img { width: 100%; height: 100%; object-fit: cover; }
 .gallery-filter__thumb--icon { display: flex; align-items: center; justify-content: center; }
 .gallery-filter__thumb--icon svg { width: 40%; height: 40%; color: var(--salvia-dark); }
+.gallery-filter__thumb--photo svg { width: 100%; height: 100%; }
 .gallery-filter span.gallery-filter__label { font-weight: 700; font-size: .84rem; line-height: 1.25; color: var(--carbon); }
 
 .gallery-empty {
@@ -713,3 +714,119 @@ input, textarea, select { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .hero__bg img { transform: none !important; }
 }
+
+/* =============================================================
+   10. Servicios — filtro por categoría + tarjetas de tratamiento
+   ============================================================= */
+.services-filter-menu { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 640px) { .services-filter-menu { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 980px) { .services-filter-menu { grid-template-columns: repeat(7, 1fr); gap: .9rem; } }
+
+.services-filter-menu .gallery-filter[aria-selected="true"] { border-color: var(--terracota); background: var(--crema); }
+
+[data-services-results] { scroll-margin-top: 110px; }
+[data-services-panel][hidden] { display: none; }
+
+.services-empty-hint {
+  text-align: center; padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
+  color: var(--text-soft); font-size: 1rem;
+}
+.services-empty-hint[hidden] { display: none; }
+
+.price-list__heading {
+  font-family: var(--display); font-size: 1.05rem; font-weight: 600;
+  color: var(--terracota-dark); margin: 1.6rem 0 .6rem;
+}
+.price-list__heading:first-child { margin-top: 0; }
+
+.treatment-grid { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .treatment-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1080px) { .treatment-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.treatment-card {
+  background: var(--white); border-radius: var(--radius-m); box-shadow: var(--shadow-card);
+  padding: 1.6rem 1.6rem 1.8rem; display: flex; flex-direction: column; gap: 1rem;
+}
+
+.before-after {
+  position: relative; width: 180px; max-width: 40%; aspect-ratio: 1/1; flex-shrink: 0;
+}
+.before-after svg { width: 100%; height: 100%; display: block; }
+.before-after__pill {
+  position: absolute; top: 10%; padding: .3rem .8rem; border-radius: 999px;
+  background: var(--terracota); color: var(--crema); font-size: .68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .04em; box-shadow: var(--shadow-card);
+}
+.before-after__pill--before { left: -6px; }
+.before-after__pill--after { right: -6px; background: var(--salvia-dark); }
+.services-panel__art--split { display: flex; align-items: center; justify-content: center; gap: 2.4rem; flex-wrap: wrap; padding: 1.5rem; }
+.services-panel__art--split p { max-width: 26ch; font-size: .88rem; color: var(--text-soft); }
+.treatment-card__art {
+  width: 100%; aspect-ratio: 16/9; border-radius: var(--radius-s);
+  background: var(--crema); display: flex; align-items: center; justify-content: center;
+  overflow: hidden; margin-bottom: .2rem;
+}
+.treatment-card__art svg { width: 58%; height: 58%; }
+.treatment-card__name { font-family: var(--display); font-size: 1.2rem; font-weight: 600; }
+.treatment-card__prices { display: flex; gap: .5rem; flex-wrap: wrap; }
+.treatment-chip {
+  background: var(--crema); border-radius: var(--radius-s); padding: .4rem .85rem;
+  text-align: center; line-height: 1.3; min-width: 74px;
+}
+.treatment-chip__amount { display: block; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--terracota-dark); }
+.treatment-chip__label { display: block; font-size: .64rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; letter-spacing: .04em; }
+.treatment-card__desc { font-size: .87rem; color: var(--text-soft); line-height: 1.6; }
+.treatment-card__note { font-size: .78rem; font-weight: 600; color: var(--salvia-dark); }
+
+.services-panel__art {
+  width: 100%; aspect-ratio: 16/7; border-radius: var(--radius-m);
+  background: var(--crema); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.8rem; box-shadow: var(--shadow-card); overflow: hidden;
+}
+.services-panel__art svg { width: 30%; max-width: 200px; }
+@media (min-width: 720px) { .services-panel__art { aspect-ratio: 21/6; } }
+
+/* --- Tarjetas compactas (icono + nombre + precio) para listas de servicios --- */
+.icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.card-grid {
+  display: grid; gap: .9rem; grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 560px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 860px) { .card-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.mini-card {
+  background: var(--white); border-radius: var(--radius-m); box-shadow: var(--shadow-card);
+  padding: 1.1rem 1rem 1.2rem; display: flex; flex-direction: column; gap: .7rem;
+  transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+}
+.mini-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+.mini-card__art {
+  width: 100%; aspect-ratio: 5/3; border-radius: var(--radius-s);
+  background: var(--crema); display: flex; align-items: center; justify-content: center;
+}
+.mini-card__art svg { width: 46%; height: 46%; color: var(--terracota); }
+.mini-card__name { font-family: var(--display); font-weight: 600; font-size: .96rem; line-height: 1.3; }
+.mini-card__prices { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: auto; }
+.mini-card__chip {
+  background: var(--crema); border-radius: var(--radius-s); padding: .3rem .6rem;
+  text-align: center; line-height: 1.25;
+}
+.mini-card__chip-amount { display: block; font-family: var(--display); font-weight: 700; font-size: .88rem; color: var(--terracota-dark); }
+.mini-card__chip-label { display: block; font-size: .58rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; letter-spacing: .03em; }
+
+.services-panel__art--split {
+  aspect-ratio: auto; height: auto; overflow: visible;
+  flex-wrap: wrap; padding: 2rem 1.5rem;
+}
+.services-panel__art--split .before-after { max-width: none; margin-top: .6rem; }
+
+.price-list--compact { display: grid; grid-template-columns: 1fr; gap: 0; }
+@media (min-width: 720px) { .price-list--compact { grid-template-columns: 1fr 1fr; column-gap: 2.4rem; } }
+.price-list--compact .price-row { padding-block: .8rem; }
+
+.services-note {
+  background: var(--crema); border-radius: var(--radius-m); padding: 1.2rem 1.5rem;
+  font-size: .88rem; color: var(--carbon); line-height: 1.6;
+}
+.services-note strong { color: var(--terracota-dark); }

@@ -188,6 +188,37 @@
     select(buttons[0].getAttribute("data-filter"));
   }
 
+  /* ---- Servicios: filtro por categoría (menú de precios) ---- */
+  function initServicesFilter() {
+    var menu = $(".services-filter-menu");
+    var results = $("[data-services-results]");
+    if (!menu || !results) return;
+    var buttons = $$(".gallery-filter", menu);
+    var panels = $$("[data-services-panel]");
+    var hint = $("[data-services-hint]");
+    if (!buttons.length || !panels.length) return;
+
+    function select(filter) {
+      buttons.forEach(function (b) {
+        b.setAttribute("aria-selected", b.getAttribute("data-filter") === filter ? "true" : "false");
+      });
+      panels.forEach(function (el) {
+        el.hidden = el.getAttribute("data-cat") !== filter;
+      });
+      if (hint) hint.hidden = true;
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        select(b.getAttribute("data-filter"));
+        var y = results.getBoundingClientRect().top + window.scrollY - 110;
+        window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
+      });
+    });
+
+    panels.forEach(function (el) { el.hidden = true; });
+  }
+
   /* ---- Header: sombra/estado al hacer scroll ---- */
   function initHeaderState() {
     var header = $(".site-header");
@@ -262,6 +293,7 @@
     safe(initHeroTitleReveal, "initHeroTitleReveal");
     safe(initHeroParallax, "initHeroParallax");
     safe(initGalleryFilter, "initGalleryFilter");
+    safe(initServicesFilter, "initServicesFilter");
     safe(initHeaderState, "initHeaderState");
     safe(initContactForm, "initContactForm");
     document.documentElement.classList.add("is-ready");

@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Public+Sans:wght@400;500;600;700&display=swap">
 <link rel="preload" as="image" href="assets/img/hero-salon-wide.webp" fetchpriority="high">
-<link rel="stylesheet" href="styles.css?v=20260823">
+<link rel="stylesheet" href="styles.css?v=20260826g">
 <link rel="canonical" href="https://broadwaynailsandlashes.com/">
 <meta name="keywords" content="nail salon San Antonio, manicure San Antonio TX, pedicure San Antonio, nail salon 78217, Broadway Nails and Lashes, best nail salon San Antonio, lash extensions San Antonio">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -57,7 +57,7 @@
   "@id": "https://broadwaynailsandlashes.com/#business",
   "name": "Broadway Nails & Lashes",
   "alternateName": "Broadway Nails and Lashes",
-  "description": "Family-run nail salon in San Antonio, TX offering manicure, pedicure, nail extensions, lashes, brows, waxing, and facials. Founded by Linda, with more than 30 years of experience. Winner of BNS Best in Business \u2014 Nail Salon, North San Antonio, 2024 & 2025.",
+  "description": "Family-run nail salon in San Antonio, TX offering manicure, pedicure, nail extensions, lash & brow services, waxing, facials, and hair styling. Founded by Linda, with more than 30 years of experience. Winner of BNS Best in Business \u2014 Nail Salon, North San Antonio, 2024 & 2025.",
   "image": [
     "https://broadwaynailsandlashes.com/assets/img/hero-salon-wide.webp",
     "https://broadwaynailsandlashes.com/assets/img/interior-salon-warm.webp"
@@ -117,12 +117,13 @@
     "@type": "OfferCatalog",
     "name": "Services",
     "itemListElement": [
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Manicure" }, "priceRange": "$20\u2013$45" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pedicure" }, "priceRange": "$35\u2013$55" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Nail Extensions" }, "priceRange": "$45\u2013$70" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Lashes, Brows & Waxing" }, "priceRange": "$8\u2013$90" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Facial" }, "priceRange": "$50\u2013$65" },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hair Styling" }, "priceRange": "$35+" }
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Manicure" }, "priceRange": "$18\u2013$70" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pedicure" }, "priceRange": "$30\u2013$120" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Nail Extensions (Acrylic, Dip, GelX, Builder Gel)" }, "priceRange": "$48\u2013$85" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Eyelash Extensions" }, "priceRange": "$65\u2013$160" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brows & Waxing" }, "priceRange": "$8\u2013$110" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Facial" }, "priceRange": "$65\u2013$140" },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hair Styling" }, "priceRange": "$30+" }
     ]
   }
 }
@@ -279,12 +280,23 @@
 
         <article class="service-card">
           <div class="service-card__media service-card__media--icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3c-3 3-5 6.2-5 9a5 5 0 0010 0c0-2.8-2-6-5-9z"/><path d="M9 14c1 1.4 2.4 2 3 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3z"/></svg>
+          </div>
+          <div class="service-card__body">
+            <h3 class="h3" style="font-size:1.15rem;">Kid's Paradise</h3>
+            <p class="service-card__desc">A gentle mini manicure or pedicure made just for little ones.</p>
+            <span class="service-card__price">From $18</span>
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-card__media service-card__media--icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 8c0-2.5 1.4-4 3-4s3 1.5 3 4M6 12c1-1.4 2.6-2 3.5-1M18 12c-1-1.4-2.6-2-3.5-1"/><path d="M12 8v6M9 17c1 1 2 1.4 3 1.4S14 18 15 17"/></svg>
           </div>
           <div class="service-card__body">
             <h3 class="h3" style="font-size:1.15rem;">Facial</h3>
-            <p class="service-card__desc">Cleansing and hydration to leave your skin renewed.</p>
-            <span class="service-card__price">From $50</span>
+            <p class="service-card__desc">Six treatments, from a quick refresh to a full signature face lift.</p>
+            <span class="service-card__price">From $65</span>
           </div>
         </article>
 
@@ -294,8 +306,8 @@
           </div>
           <div class="service-card__body">
             <h3 class="h3" style="font-size:1.15rem;">Hair</h3>
-            <p class="service-card__desc">Styling and hair services for your special occasion.</p>
-            <span class="service-card__price">Inquire</span>
+            <p class="service-card__desc">Cuts, color, highlights, and styling for every occasion.</p>
+            <span class="service-card__price">From $30</span>
           </div>
         </article>
       </div>
@@ -533,6 +545,6 @@
 </footer>
 
 <script defer src="lib/manifest.js"></script>
-<script defer src="main.js?v=20260823"></script>
+<script defer src="main.js?v=20260826g"></script>
 </body>
 </html>

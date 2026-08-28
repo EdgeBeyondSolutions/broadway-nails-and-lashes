@@ -719,8 +719,8 @@ input, textarea, select { font: inherit; color: inherit; }
    10. Servicios — filtro por categoría + tarjetas de tratamiento
    ============================================================= */
 .services-filter-menu { grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 640px) { .services-filter-menu { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 980px) { .services-filter-menu { grid-template-columns: repeat(7, 1fr); gap: .9rem; } }
+@media (min-width: 640px) { .services-filter-menu { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 980px) { .services-filter-menu { grid-template-columns: repeat(5, 1fr); gap: 1.1rem; } }
 
 .services-filter-menu .gallery-filter[aria-selected="true"] { border-color: var(--terracota); background: var(--crema); }
 

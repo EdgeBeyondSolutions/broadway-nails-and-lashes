@@ -150,7 +150,7 @@
 
     function start() {
       if (timer) return;
-      timer = setInterval(tick, 4200);
+      timer = setInterval(tick, 5200);
     }
     function stop() {
       clearInterval(timer);

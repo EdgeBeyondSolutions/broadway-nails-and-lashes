@@ -170,6 +170,7 @@
     if (!menu || !grid) return;
     var buttons = $$(".gallery-filter", menu);
     var items = $$("[data-cat]", grid);
+    var results = $("[data-gallery-results]");
     if (!buttons.length) return;
 
     function select(filter) {
@@ -182,7 +183,13 @@
     }
 
     buttons.forEach(function (b) {
-      b.addEventListener("click", function () { select(b.getAttribute("data-filter")); });
+      b.addEventListener("click", function () {
+        select(b.getAttribute("data-filter"));
+        if (results) {
+          var y = results.getBoundingClientRect().top + window.scrollY - 110;
+          window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
+        }
+      });
     });
 
     select(buttons[0].getAttribute("data-filter"));
